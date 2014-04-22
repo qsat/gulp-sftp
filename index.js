@@ -97,12 +97,17 @@ module.exports = function (options) {
 		c.on('close', function(had_error) {
 			return cb(had_error);
 		});
-		c.connect({
+
+    opt = {
 			host : options.host,
 			port : options.port,
-			username : options.user,
-			password : options.pass
-		});
+			username : options.user
+		}
+
+    options.pass && opt.password = options.pass 
+    options.key  && opt.privateKey = options.key
+
+		c.connect( opt );
 		
 		this.push(file);
 
